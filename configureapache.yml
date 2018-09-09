@@ -1,0 +1,31 @@
+---
+
+- hosts: "{{ host }}"
+  become: yes
+  tasks:
+
+  - name: "Install Apache Server"
+    yum:
+      name: httpd
+      state: installed
+
+  - name: "start and enable httpd"
+    systemd:
+      enabled: yes
+      name: httpd
+      state: started
+
+  - name: "create index.html file"
+    file:
+      state: touch
+      path: /var/www/html/index.html
+      
+ 
+
+  - name: "Insert content into html file"
+    lineinfile:
+      path: /var/www/html/index.html
+      line: "THIS IS YOUR WEB PAGE"
+      state: present
+
+         
